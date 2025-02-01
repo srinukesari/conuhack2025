@@ -1,0 +1,77 @@
+.dashboard {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .dashboard-main {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .file-input {
+    display: none;
+  }
+  
+  .csv-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  .csv-table th,
+  .csv-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  .content {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    gap: 20px;
+    width: 100%;
+    margin-top: 10px;
+  }
+  
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  
+  .chart-and-map {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  
+  .chart-container {
+    width: 100%;
+    height: 400px; /* Match the height of the map widget */
+  }
+  
+  .map-container {
+    width: 100%;
+    height: 400px; /* Match the height of the bar chart */
+  }
+  
+  .trending-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1em;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: inline-block;
+    margin-bottom: 20px;
+  }
+  
+  .trending-button:hover {
+    background-color: #0056b3;
+  }
