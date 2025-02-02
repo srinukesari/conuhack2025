@@ -51,12 +51,14 @@
   
   .chart-container {
     width: 100%;
-    height: 400px; /* Match the height of the map widget */
+    height: 450px; /* Match the height of the map widget */
+    border: 1px solid #ddd;
   }
   
   .map-container {
     width: 100%;
-    height: 400px; /* Match the height of the bar chart */
+    height: 450px; /* Match the height of the bar chart */
+    border: 1px solid #ddd;
   }
   
   .trending-button {

@@ -3,9 +3,10 @@ import { Chart, registerables } from "chart.js";
 
 Chart.register(...registerables);
 
-const BarChart = () => {
+const BarChart = (labels) => {
   const chartRef = useRef(null);
   const canvasRef = useRef(null);
+  console.log("labels", labels);
 
   useEffect(() => {
     const ctx = canvasRef.current.getContext("2d");
@@ -21,7 +22,7 @@ const BarChart = () => {
         datasets: [
           {
             label: "# of Votes",
-            data: [12, 19, 3],
+            data: labels.label,
             backgroundColor: [
               "rgba(75, 192, 192, 0.2)",
               "rgba(255, 159, 64, 0.2)",
@@ -56,7 +57,7 @@ const BarChart = () => {
           },
           title: {
             display: true,
-            text: "Fire Severity",
+            text: "Fire Severity Report",
           },
         },
       },
@@ -67,7 +68,7 @@ const BarChart = () => {
         chartRef.current.destroy();
       }
     };
-  }, []);
+  }, [labels]);
 
   return (
     <canvas
