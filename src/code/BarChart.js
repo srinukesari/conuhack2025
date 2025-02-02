@@ -22,7 +22,7 @@ const BarChart = (labels) => {
         datasets: [
           {
             label: "# of Votes",
-            data: labels.label,
+            data: labels.chartData,
             backgroundColor: [
               "rgba(75, 192, 192, 0.2)",
               "rgba(255, 159, 64, 0.2)",

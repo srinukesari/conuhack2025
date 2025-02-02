@@ -1,4 +1,4 @@
-import React, { useState, useEffect, use } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import BarChart from "./BarChart";
 import Card from "./Card";
@@ -20,7 +20,6 @@ const Dashboard = () => {
   const [groundCrews, setGroundCrews] = useState(0);
 
   const [onLoad, setOnLoad] = useState(false);
-  const [dummyState, setDummyState] = useState(false); // Dummy state variable
 
   useEffect(() => {
     fetch("http://localhost:11000/get_resources", {
@@ -30,7 +29,6 @@ const Dashboard = () => {
       },
     }).then(async (response) => {
       const responseData = await response.json();
-      console.log("Response Data:", responseData);
       setHelicopters(responseData.data?.Available_resources?.Helicopters);
       setSmokeJumpers(responseData.data?.Available_resources?.Smoke_Jumpers);
       setTankerPlanes(responseData.data?.Available_resources?.Tanker_Planes);
@@ -56,7 +54,6 @@ const Dashboard = () => {
     const file = event.target.files[0];
     try {
       const rows = await readCSV(file);
-      console.log("CSV Data:", rows);
 
       // Send POST request to /csv endpoint
       const response = await fetch("http://localhost:11000/process_csv", {
@@ -76,7 +73,7 @@ const Dashboard = () => {
       setFireAddressed(responseData.data?.Number_of_fires_addressed);
       setDelayed(responseData.data?.Number_of_fires_delayed);
       setDamageCost(
-        responseData.data?.Estimated_damage_costs_from_delayed_responses
+          responseData.data?.Estimated_damage_costs_from_delayed_responses
       );
       setOperationCost(responseData.data?.Total_operational_costs);
       setSeverity(labels);
@@ -91,72 +88,73 @@ const Dashboard = () => {
         });
       });
 
-      console.log("coordinates", coordinates);
       setCsvData(coordinates);
       setOnLoad(true);
-      setDummyState(!dummyState); // Update dummy state to force re-render
     } catch (error) {
       console.error("Error:", error);
     }
   };
 
-  useEffect(() => {
-    // Re-render the page when severity changes
-    console.log("Severity changed:", severity);
-  }, [severity]);
-
   return (
-    <div className="dashboard">
-      <header className="dashboard-header">
-        <h1>Whiplash Dashboard</h1>
-        <p>
-          Welcome to the admin dashboard. Here you can monitor and manage fire
-          severity data.
-        </p>
-      </header>
-      <main className="dashboard-main">
-        <div className="upload-and-cards">
-          <label className="trending-button">
-            Upload CSV
-            <input
-              type="file"
-              accept=".csv"
-              onChange={handleFileUpload}
-              className="file-input"
-            />
-          </label>
-          <div className="info-cards">
-            <Card title="Ground Crew" value={groundCrews} />
-            <Card title="Helicopters" value={helicopters} />
-            <Card title="Smoke Jumpers" value={smokeJumpers} />
-            <Card title="Fire Engines" value={fireEngines} />
-            <Card title="Tanker Planes" value={tankerPlanes} />
-          </div>
-        </div>
-        {onLoad && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5 }}
-            className="content">
-            <div className="cards">
-              <Card title="Total Operation Cost" value={`$${operationCost}`} />
-              <Card title="No of Fires Addressed" value={fireAddressed} />
-              <Card title="No of Delayed" value={delayed} />
-              <Card title="Damage Cost" value={`$${damageCost}`} />
-            </div>
-            <div className="chart-and-map">
-              <div className="chart-container">
-                <BarChart chartData={severity} />
-              </div>
-              <div className="map-container">
-                <MapWidget coordinates={csvData} />
+      <div className="dashboard">
+        <header className="dashboard-header">
+          <h1>Whiplash Dashboard</h1>
+          <p>
+            Welcome to the admin dashboard. Here you can monitor and manage fire
+            severity data.
+          </p>
+        </header>
+        <main className="dashboard-main">
+          {/* Phase 1 Section */}
+          <section id="phase1">
+            <div className="upload-and-cards">
+              <label className="trending-button">
+                Upload CSV
+                <input
+                    type="file"
+                    accept=".csv"
+                    onChange={handleFileUpload}
+                    className="file-input"
+                />
+              </label>
+              <div className="info-cards">
+                <Card title="Ground Crew" value={groundCrews} />
+                <Card title="Helicopters" value={helicopters} />
+                <Card title="Smoke Jumpers" value={smokeJumpers} />
+                <Card title="Fire Engines" value={fireEngines} />
+                <Card title="Tanker Planes" value={tankerPlanes} />
               </div>
             </div>
-          </motion.div>
-        )}
-      </main>
-    </div>
+            {onLoad && (
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.5 }}
+                    className="content">
+                  <div className="cards">
+                    <Card title="Total Operation Cost" value={`$${operationCost}`} />
+                    <Card title="No of Fires Addressed" value={fireAddressed} />
+                    <Card title="No of Delayed" value={delayed} />
+                    <Card title="Damage Cost" value={`$${damageCost}`} />
+                  </div>
+                  <div className="chart-and-map">
+                    <div className="chart-container">
+                      <BarChart chartData={severity} />
+                    </div>
+                    <div className="map-container">
+                      <MapWidget coordinates={csvData} />
+                    </div>
+                  </div>
+                </motion.div>
+            )}
+          </section>
+          {/* Phase 2 Section */}
+          <section id="phase2">
+            {/* Empty section for future use */}
+
+          </section>
+        </main>
+      </div>
   );
 };
 
